@@ -11,6 +11,7 @@ import GallerySection from '@/components/GallerySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ImageBackground from '@/components/ImageBackground';
+import { Analytics } from "@vercel/analytics/react"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,6 +92,7 @@ const Index = () => {
         
         <Footer />
       </div>
+      <Analytics />
     </div>
   );
 };
