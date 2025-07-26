@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X, Lightbulb } from 'lucide-react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HeaderProps {
   darkMode: boolean;
@@ -11,6 +14,7 @@ interface HeaderProps {
 const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const lampRef = useRef<HTMLButtonElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
@@ -20,6 +24,42 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Track active section on scroll
+  useEffect(() => {
+    const sections = ['home', 'about', 'timeline', 'projects', 'gallery', 'contact'];
+    const triggers: ScrollTrigger[] = [];
+
+    sections.forEach((sectionId) => {
+      const trigger = ScrollTrigger.create({
+        trigger: `#${sectionId}`,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => setActiveSection(sectionId),
+        onEnterBack: () => setActiveSection(sectionId)
+      });
+      triggers.push(trigger);
+    });
+
+    return () => {
+      triggers.forEach(trigger => trigger.kill());
+    };
+  }, []);
+
+  // Handle URL hash on page load
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      setActiveSection(hash);
+      // Smooth scroll to section after a brief delay to ensure DOM is ready
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   }, []);
 
   useEffect(() => {
@@ -70,13 +110,28 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   };
 
   const navItems = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#timeline', label: 'Experience' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#contact', label: 'Contact' },
+    { href: '#home', label: 'Home', id: 'home' },
+    { href: '#about', label: 'About', id: 'about' },
+    { href: '#timeline', label: 'Experience', id: 'timeline' },
+    { href: '#projects', label: 'Projects', id: 'projects' },
+    { href: '#gallery', label: 'Gallery', id: 'gallery' },
+    { href: '#contact', label: 'Contact', id: 'contact' },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    setActiveSection(sectionId);
+    setIsMenuOpen(false);
+    
+    // Update URL hash
+    window.history.pushState({}, '', `#${sectionId}`);
+    
+    // Smooth scroll to section
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header 
@@ -99,9 +154,17 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-primary hover:text-white dark:text-foreground dark:hover:text-primary transition-colors duration-200"
+                onClick={(e) => handleNavClick(e, item.id)}
+                className={`transition-all duration-200 relative ${
+                  activeSection === item.id
+                    ? 'text-white dark:text-primary font-semibold'
+                    : 'text-primary hover:text-white dark:text-foreground dark:hover:text-primary'
+                }`}
               >
                 {item.label}
+                {activeSection === item.id && (
+                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"></div>
+                )}
               </a>
             ))}
           </div>
@@ -170,10 +233,17 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="block text-primary hover:text-white dark:text-foreground dark:hover:text-primary transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className={`block transition-all duration-200 relative ${
+                    activeSection === item.id
+                      ? 'text-white dark:text-primary font-semibold'
+                      : 'text-primary hover:text-white dark:text-foreground dark:hover:text-primary'
+                  }`}
                 >
                   {item.label}
+                  {activeSection === item.id && (
+                    <div className="absolute left-0 top-1/2 w-1 h-4 bg-primary rounded-full -translate-y-1/2"></div>
+                  )}
                 </a>
               ))}
             </div>

@@ -69,28 +69,28 @@ const TimelineSection = () => {
     // Animate timeline items on scroll
     const items = timelineRef.current.querySelectorAll('.timeline-item');
     
-    items.forEach((item, index) => {
-      gsap.fromTo(item, 
-        {
-          opacity: 0,
-          x: index % 2 === 0 ? -50 : 50,
-          scale: 0.8
-        },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    });
+    // items.forEach((item, index) => {
+    //   gsap.fromTo(item, 
+    //     {
+    //       opacity: 0,
+    //       x: index % 2 === 0 ? -50 : 50,
+    //       scale: 0.8
+    //     },
+    //     {
+    //       opacity: 1,
+    //       x: 0,
+    //       scale: 1,
+    //       duration: 0,
+    //       ease: "power2.out",
+    //       scrollTrigger: {
+    //         trigger: item,
+    //         start: "top 80%",
+    //         end: "bottom 20%",
+    //         toggleActions: "play none none reverse"
+    //       }
+    //     }
+    //   );
+    // });
 
     // Animate the timeline line
     gsap.fromTo('.timeline-line',

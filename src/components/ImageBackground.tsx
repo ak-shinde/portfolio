@@ -12,6 +12,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
   const backgroundRef = useRef<HTMLDivElement>(null);
   const currentImageRef = useRef<HTMLDivElement>(null);
   const nextImageRef = useRef<HTMLDivElement>(null);
+  const currentImageKey = useRef<string>('home');
 
   useEffect(() => {
     const background = backgroundRef.current;
@@ -42,24 +43,32 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
 
     // Function to smoothly transition backgrounds
     const transitionToBackground = (imageKey: keyof typeof backgroundImages) => {
-      const newImageUrl = backgroundImages[imageKey];
-      
-      // Skip transition if it's the same image
-      const currentBgImage = currentImage.style.backgroundImage;
-      if (currentBgImage.includes(newImageUrl.split('/').pop() || '')) {
+      // Skip if it's the same image key as currently displayed
+      if (currentImageKey.current === imageKey) {
         return;
       }
       
-      // Set the next image background and fade it in on top
+      const newImageUrl = backgroundImages[imageKey];
+      
+      // Kill any existing animations to prevent conflicts
+      gsap.killTweensOf([currentImage, nextImage]);
+      
+      // Ensure current image is fully visible during transition
+      gsap.set(currentImage, { opacity: 1 });
+      
+      // Set the next image background and prepare for transition
       gsap.set(nextImage, { 
         backgroundImage: `url(${newImageUrl})`,
         opacity: 0 
       });
 
+      // Update the current image key immediately to prevent duplicate calls
+      currentImageKey.current = imageKey;
+
       // Fade in the new image on top of the current one
       gsap.to(nextImage, {
         opacity: 1,
-        duration: 0.8,
+        duration: 0.5,
         ease: "power2.inOut",
         onComplete: () => {
           // Swap the images instantly after fade completes
