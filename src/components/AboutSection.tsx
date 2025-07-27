@@ -123,7 +123,7 @@ const AboutSection = () => {
               <div className="text-sm text-muted-foreground">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">50+</div>
+              <div className="text-2xl font-bold text-primary">30+</div>
               <div className="text-sm text-muted-foreground">Projects Built</div>
             </div>
             <div className="text-center">

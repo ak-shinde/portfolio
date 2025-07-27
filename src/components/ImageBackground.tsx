@@ -14,6 +14,26 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
   const nextImageRef = useRef<HTMLDivElement>(null);
   const currentImageKey = useRef<string>('home');
 
+  function getBackgroundImages(darkMode: boolean) {
+    return darkMode ? {
+      home: '/lovable-uploads/reference-dark.PNG',
+      about: '/lovable-uploads/about-dark.PNG',
+      skills: '/lovable-uploads/skills-dark.PNG',
+      experience: '/lovable-uploads/experience-dark.PNG',
+      projects: '/lovable-uploads/projects-dark.PNG',
+      gallery: '/lovable-uploads/gallery-dark.PNG',
+      contact: '/lovable-uploads/reference-dark.PNG'
+    } : {
+      home: '/lovable-uploads/reference.PNG',
+      about: '/lovable-uploads/about.PNG',
+      skills: '/lovable-uploads/skills.PNG',
+      experience: '/lovable-uploads/experience.PNG',
+      projects: '/lovable-uploads/projects.PNG',
+      gallery: '/lovable-uploads/gallery.PNG',
+      contact: '/lovable-uploads/reference.png'
+    };
+  }
+
   useEffect(() => {
     const background = backgroundRef.current;
     const currentImage = currentImageRef.current;
@@ -25,22 +45,23 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
     const triggers: ScrollTrigger[] = [];
 
     // Background image mapping
-    const backgroundImages = {
-      home: '/lovable-uploads/reference.png',
-      about: '/lovable-uploads/about.PNG',
-      skills: '/lovable-uploads/experience.PNG', // Use experience background for skills
-      experience: '/lovable-uploads/experience.PNG',
-      projects: '/lovable-uploads/experience.PNG', // Same as experience for projects
-      gallery: '/lovable-uploads/gallery.PNG',
-      contact: '/lovable-uploads/connect.PNG'
-    };
+    const backgroundImages = getBackgroundImages(darkMode);
 
-    // Set initial background to hero
-    gsap.set(currentImage, { 
-      backgroundImage: `url(${backgroundImages.home})`,
-      opacity: 1 
-    });
-    gsap.set(nextImage, { opacity: 0 });
+    // Set initial background to current section (or hero if first load)
+    // Only set image if it's the first load, not when darkMode changes
+    const currentKey = currentImageKey.current as keyof typeof backgroundImages;
+    const initialImage = backgroundImages[currentKey];
+    
+    // Check if this is the initial load (currentImage doesn't have a background yet)
+    const isInitialLoad = !currentImage.style.backgroundImage;
+    
+    if (isInitialLoad) {
+      gsap.set(currentImage, { 
+        backgroundImage: `url(${initialImage})`,
+        opacity: 1 
+      });
+      gsap.set(nextImage, { opacity: 0 });
+    }
 
     // Function to smoothly transition backgrounds
     const transitionToBackground = (imageKey: keyof typeof backgroundImages) => {
@@ -148,7 +169,51 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
     return () => {
       triggers.forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [darkMode]);
+
+  // Smoothly transition background image when dark mode changes
+  useEffect(() => {
+    const currentImage = currentImageRef.current;
+    const nextImage = nextImageRef.current;
+    
+    if (!currentImage || !nextImage) return;
+    
+    // Skip if this is the initial load (no existing background image)
+    if (!currentImage.style.backgroundImage) return;
+
+    const backgroundImages = getBackgroundImages(darkMode);
+    const currentKey = currentImageKey.current as keyof typeof backgroundImages;
+    const newImageUrl = backgroundImages[currentKey];
+    
+    if (newImageUrl) {
+      // Kill any existing animations to prevent conflicts
+      gsap.killTweensOf([currentImage, nextImage]);
+      
+      // Ensure current image is fully visible during transition
+      gsap.set(currentImage, { opacity: 1 });
+      
+      // Set the next image background and prepare for transition
+      gsap.set(nextImage, { 
+        backgroundImage: `url(${newImageUrl})`,
+        opacity: 0 
+      });
+
+      // Smooth fade transition between light/dark images
+      gsap.to(nextImage, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: () => {
+          // Swap the images after fade completes
+          gsap.set(currentImage, { 
+            backgroundImage: `url(${newImageUrl})`,
+            opacity: 1 
+          });
+          gsap.set(nextImage, { opacity: 0 });
+        }
+      });
+    }
+  }, [darkMode]);
 
   return (
     <div 
@@ -166,7 +231,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
         }}
       >
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40 dark:bg-black/50 transition-all duration-500"></div>
+        <div className={`bg-overlay absolute inset-0 transition-all duration-500 ${darkMode ? 'bg-black/60' : 'bg-black/40'}`}></div>
       </div>
 
       {/* Next background image for smooth transitions */}
@@ -180,7 +245,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
         }}
       >
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40 dark:bg-black/50 transition-all duration-500"></div>
+        <div className={`bg-overlay absolute inset-0 transition-all duration-500 ${darkMode ? 'bg-black/60' : 'bg-black/40'}`}></div>
       </div>
     </div>
   );

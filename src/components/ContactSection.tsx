@@ -277,7 +277,7 @@ const ContactSection = () => {
                 
                 <div className="flex items-center space-x-4">
                   <Briefcase className="w-6 h-6 text-primary" />
-                  <span className="text-foreground">Available for working in SF Bay Area / Remotely</span>
+                  <span className="text-foreground">Open to work in SF Bay Area / Remotely</span>
                 </div>
               </div>
             </div>

@@ -146,23 +146,23 @@ const SkillsSection = () => {
       );
     });
 
-    // Animate progress bars
-    progressBars.forEach((bar) => {
-      const width = bar.getAttribute('data-width');
-      gsap.fromTo(bar,
-        { width: '0%' },
-        {
-          width: `${width}%`,
-          duration: 0.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: bar,
-            start: "top 90%",
-            toggleActions: "play none none none"
-          }
-        }
-      );
-    });
+    // // Animate progress bars
+    // progressBars.forEach((bar) => {
+    //   const width = bar.getAttribute('data-width');
+    //   gsap.fromTo(bar,
+    //     { width: '0%' },
+    //     {
+    //       width: `${width}%`,
+    //       duration: 0.5,
+    //       ease: "power2.out",
+    //       scrollTrigger: {
+    //         trigger: bar,
+    //         start: "top 90%",
+    //         toggleActions: "play none none none"
+    //       }
+    //     }
+    //   );
+    // });
 
   }, []);
 

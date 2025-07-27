@@ -79,56 +79,56 @@
   }
 
   .dark {
-    /* Dark mode - Night atmosphere with desk lamp */
-    --background: 220 15% 8%;
-    --foreground: 35 40% 85%;
+    /* Dark mode - Night atmosphere with purple-blue theme */
+    --background: 230 25% 8%;
+    --foreground: 250 40% 85%;
 
-    --card: 220 12% 12%;
-    --card-foreground: 35 35% 80%;
+    --card: 230 20% 12%;
+    --card-foreground: 250 35% 80%;
 
-    --popover: 220 12% 12%;
-    --popover-foreground: 35 35% 80%;
+    --popover: 230 20% 12%;
+    --popover-foreground: 250 35% 80%;
 
-    /* Glowing amber for dark mode */
-    --primary: 35 85% 65%;
-    --primary-foreground: 220 15% 8%;
+    /* Glowing purple for dark mode */
+    --primary: 260 85% 70%;
+    --primary-foreground: 230 25% 8%;
 
-    /* Dark warm secondary */
-    --secondary: 220 10% 18%;
-    --secondary-foreground: 35 50% 75%;
+    /* Dark purple secondary */
+    --secondary: 230 15% 18%;
+    --secondary-foreground: 250 50% 75%;
 
     /* Dark muted */
-    --muted: 220 8% 15%;
-    --muted-foreground: 35 25% 60%;
+    --muted: 230 12% 15%;
+    --muted-foreground: 250 25% 60%;
 
     /* Dark accent */
-    --accent: 220 10% 20%;
-    --accent-foreground: 35 60% 70%;
+    --accent: 245 20% 25%;
+    --accent-foreground: 250 60% 70%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 8% 22%;
-    --input: 220 8% 22%;
-    --ring: 35 85% 65%;
+    --border: 230 12% 22%;
+    --input: 230 12% 22%;
+    --ring: 260 85% 70%;
 
-    /* Dark mode custom tokens */
-    --golden-hour: 35 85% 65%;
-    --golden-glow: 40 90% 70%;
-    --warm-shadow: 220 15% 5%;
-    --coffee-brown: 25 45% 30%;
+    /* Dark mode custom tokens - night purple theme */
+    --golden-hour: 260 85% 70%;
+    --golden-glow: 270 90% 75%;
+    --warm-shadow: 230 20% 5%;
+    --coffee-brown: 250 45% 30%;
     --plant-green: 120 40% 35%;
-    --desk-wood: 28 25% 35%;
+    --desk-wood: 240 25% 35%;
     
-    /* Dark gradients */
-    --gradient-warm: linear-gradient(135deg, hsl(35 70% 35%), hsl(28 50% 25%));
-    --gradient-golden: linear-gradient(90deg, hsl(40 80% 60%), hsl(35 75% 55%));
-    --gradient-glow: radial-gradient(circle, hsl(35 80% 50% / 0.4), transparent 70%);
+    /* Dark gradients - purple/blue theme */
+    --gradient-warm: linear-gradient(135deg, hsl(260 70% 35%), hsl(240 50% 25%));
+    --gradient-golden: linear-gradient(90deg, hsl(270 80% 65%), hsl(260 75% 60%));
+    --gradient-glow: radial-gradient(circle, hsl(260 80% 55% / 0.4), transparent 70%);
     
-    /* Dark shadows */
-    --shadow-warm: 0 10px 30px -5px hsl(220 15% 5% / 0.8);
-    --shadow-golden: 0 0 30px hsl(35 80% 55% / 0.4);
-    --shadow-soft: 0 5px 15px -3px hsl(220 15% 5% / 0.6);
+    /* Dark shadows - purple glow */
+    --shadow-warm: 0 10px 30px -5px hsl(230 20% 5% / 0.8);
+    --shadow-golden: 0 0 30px hsl(260 80% 60% / 0.4);
+    --shadow-soft: 0 5px 15px -3px hsl(230 20% 5% / 0.6);
   }
 }
 
@@ -234,6 +234,14 @@
     color: hsl(var(--golden-glow));
   }
 
+  .text-night {
+    color: hsl(260 85% 70%);
+  }
+
+  .text-purple-glow {
+    color: hsl(270 90% 75%);
+  }
+
   .bg-desk-wood {
     background-color: hsl(var(--desk-wood));
   }
@@ -252,6 +260,14 @@
 
   .shadow-soft {
     box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-purple {
+    box-shadow: 0 0 30px hsl(260 80% 60% / 0.4);
+  }
+
+  .shadow-night {
+    box-shadow: 0 0 20px hsl(270 80% 65% / 0.3);
   }
 }
 
