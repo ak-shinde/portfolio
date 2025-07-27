@@ -14,6 +14,7 @@ const ContactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyNoteRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
@@ -134,9 +135,8 @@ const ContactSection = () => {
       setFormData({ name: '', email: '', message: '' });
       
       // Add success animation
-      const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        gsap.to(submitBtn, {
+      if (submitBtnRef.current) {
+        gsap.to(submitBtnRef.current, {
           scale: 0.95,
           duration: 0.1,
           yoyo: true,
@@ -239,6 +239,7 @@ const ContactSection = () => {
             </div>
             
             <Button
+              ref={submitBtnRef}
               type="submit"
               disabled={isSubmitting}
               className="w-full glow-effect hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
