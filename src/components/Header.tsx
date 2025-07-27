@@ -9,26 +9,13 @@ gsap.registerPlugin(ScrollTrigger);
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  isMenuOpen: boolean;
+  setIsMenuOpen: (open: boolean) => void;
 }
 
-const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-
-  // Disable/enable scroll when mobile menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
   const lampRef = useRef<HTMLButtonElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
@@ -277,13 +264,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Mobile Menu Backdrop Blur */}
-        {isMenuOpen && (
-          <div 
-            className="md:hidden fixed inset-0 top-20 z-30 bg-black/20 backdrop-blur-sm transition-all duration-300 cursor-pointer" 
-            onClick={() => setIsMenuOpen(false)}
-          />
-        )}
+
 
         {/* Mobile Menu */}
         {isMenuOpen && (
@@ -299,8 +280,8 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
                   onClick={(e) => handleNavClick(e, item.id)}
                   className={`block transition-all duration-200 relative py-2 px-3 rounded-lg hover:bg-background/20 ${
                     activeSection === item.id
-                      ? 'text-white dark:text-primary font-semibold bg-background/20'
-                      : 'text-primary hover:text-white dark:text-foreground dark:hover:text-primary'
+                      ? 'text-primary dark:text-primary font-semibold bg-background/20'
+                      : 'text-white hover:text-primary dark:text-foreground dark:hover:text-primary'
                   }`}
                 >
                   {item.label}

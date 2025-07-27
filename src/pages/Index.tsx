@@ -19,6 +19,21 @@ gsap.registerPlugin(ScrollTrigger);
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Disable/enable scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   // Initialize theme based on system preference
   useEffect(() => {
@@ -88,13 +103,30 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       {/* Reference Image Background */}
-      <ImageBackground darkMode={darkMode} />
+      <div className="relative">
+        <ImageBackground darkMode={darkMode} />
+        {/* Blue overlay for menu open state */}
+        {isMenuOpen && (
+          <div className="absolute inset-0 bg-blue-900/90 transition-all duration-300" />
+        )}
+      </div>
+      
+      {/* Mobile Menu Clickable Overlay - Full Page Coverage */}
+      {isMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 z-30 cursor-pointer" 
+          onClick={() => setIsMenuOpen(false)}
+          style={{ top: '80px' }}
+        />
+      )}
       
       {/* Content overlay */}
       <div className="relative z-10">
-        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         
-        <main>
+        <main 
+          className={`transition-all duration-300 ${isMenuOpen ? 'blur-lg' : ''}`}
+        >
           <HeroSection />
           <AboutSection />
           <SkillsSection />
