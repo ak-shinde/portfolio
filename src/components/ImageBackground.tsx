@@ -13,6 +13,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
   const currentImageRef = useRef<HTMLDivElement>(null);
   const nextImageRef = useRef<HTMLDivElement>(null);
   const currentImageKey = useRef<string>('home');
+  const preloadedImages = useRef<Set<string>>(new Set());
 
   function getBackgroundImages(darkMode: boolean) {
     return darkMode ? {
@@ -33,6 +34,28 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
       contact: '/lovable-uploads/reference.PNG'
     };
   }
+
+  // Preload all background images to prevent flickering
+  const preloadImages = () => {
+    const lightImages = getBackgroundImages(false);
+    const darkImages = getBackgroundImages(true);
+    const allImages = [...Object.values(lightImages), ...Object.values(darkImages)];
+    
+    allImages.forEach(imageUrl => {
+      if (!preloadedImages.current.has(imageUrl)) {
+        const img = new Image();
+        img.onload = () => {
+          preloadedImages.current.add(imageUrl);
+        };
+        img.src = imageUrl;
+      }
+    });
+     };
+
+  // Preload images on component mount
+  useEffect(() => {
+    preloadImages();
+  }, []);
 
   useEffect(() => {
     const background = backgroundRef.current;
@@ -72,35 +95,46 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
       
       const newImageUrl = backgroundImages[imageKey];
       
-      // Kill any existing animations to prevent conflicts
-      gsap.killTweensOf([currentImage, nextImage]);
-      
-      // Ensure current image is fully visible during transition
-      gsap.set(currentImage, { opacity: 1 });
-      
-      // Set the next image background and prepare for transition
-      gsap.set(nextImage, { 
-        backgroundImage: `url(${newImageUrl})`,
-        opacity: 0 
-      });
+      // Check if image is preloaded, if not, wait a bit for it to load
+      const performTransition = () => {
+        // Kill any existing animations to prevent conflicts
+        gsap.killTweensOf([currentImage, nextImage]);
+        
+        // Ensure current image is fully visible during transition
+        gsap.set(currentImage, { opacity: 1 });
+        
+        // Set the next image background and prepare for transition
+        gsap.set(nextImage, { 
+          backgroundImage: `url(${newImageUrl})`,
+          opacity: 0 
+        });
 
-      // Update the current image key immediately to prevent duplicate calls
-      currentImageKey.current = imageKey;
+        // Update the current image key immediately to prevent duplicate calls
+        currentImageKey.current = imageKey;
 
-      // Fade in the new image on top of the current one
-      gsap.to(nextImage, {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.inOut",
-        onComplete: () => {
-          // Swap the images instantly after fade completes
-          gsap.set(currentImage, { 
-            backgroundImage: `url(${newImageUrl})`,
-            opacity: 1 
-          });
-          gsap.set(nextImage, { opacity: 0 });
-        }
-      });
+        // Fade in the new image on top of the current one
+        gsap.to(nextImage, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.inOut",
+          onComplete: () => {
+            // Swap the images instantly after fade completes
+            gsap.set(currentImage, { 
+              backgroundImage: `url(${newImageUrl})`,
+              opacity: 1 
+            });
+            gsap.set(nextImage, { opacity: 0 });
+          }
+        });
+      };
+
+      // If image is preloaded, transition immediately. Otherwise, add a small delay
+      if (preloadedImages.current.has(newImageUrl)) {
+        performTransition();
+      } else {
+        // Small delay to allow image to load if not preloaded
+        setTimeout(performTransition, 100);
+      }
     };
 
     // Hero section
@@ -230,8 +264,6 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className={`bg-overlay absolute inset-0 transition-all duration-500 bg-black/30`}></div>
       </div>
 
       {/* Next background image for smooth transitions */}
@@ -244,8 +276,6 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className={`bg-overlay absolute inset-0 transition-all duration-500 bg-black/30`}></div>
       </div>
     </div>
   );
