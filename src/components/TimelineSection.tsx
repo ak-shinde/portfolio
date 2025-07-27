@@ -126,9 +126,9 @@ const TimelineSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent py-20"
     >
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-6">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 md:px-6">
         <h2 
-          className="text-4xl md:text-6xl font-bold mb-16 text-center text-golden"
+          className="text-3xl md:text-6xl font-bold mb-12 md:mb-16 text-center text-golden"
           style={{ 
             textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
           }}
@@ -137,50 +137,56 @@ const TimelineSection = () => {
         </h2>
 
         <div ref={timelineRef} className="relative">
-          {/* Timeline Line */}
-          <div className="timeline-line absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-primary via-accent to-primary h-full rounded-full shadow-lg"></div>
+          {/* Timeline Line - Desktop: center, Mobile: left */}
+          <div className="timeline-line absolute left-4 md:left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-primary via-accent to-primary h-full rounded-full shadow-lg"></div>
 
           {/* Timeline Items */}
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             {timelineData.map((item, index) => (
               <div
                 key={item.id}
-                className={`timeline-item flex items-center ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                className={`timeline-item flex items-center flex-row ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                {/* Content */}
-                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                  <div className="bg-background/10 backdrop-blur-md rounded-2xl p-6 shadow-soft border border-white/20 hover:bg-background/20 hover:shadow-golden transition-all duration-300">
-                    <div className={`flex items-center gap-2 mb-3 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                      <span className="text-2xl font-bold text-primary">{item.year}</span>
+                {/* Content - Mobile: full width with left padding, Desktop: alternating */}
+                <div className={`w-full pl-10 pr-2 text-left md:w-5/12 ${
+                  index % 2 === 0 
+                    ? 'md:pr-8 md:text-right md:pl-0' 
+                    : 'md:pl-8 md:text-left md:pr-0'
+                }`}>
+                  <div className="bg-background/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-soft border border-white/20 hover:bg-background/20 hover:shadow-golden transition-all duration-300">
+                    <div className={`flex items-center gap-2 mb-3 justify-start ${
+                      index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'
+                    }`}>
+                      <span className="text-xl md:text-2xl font-bold text-primary">{item.year}</span>
                       {item.current && (
                         <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full animate-pulse">
                           Current
                         </span>
                       )}
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
+                    <h3 className="text-lg md:text-xl font-semibold text-white mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-primary font-medium mb-3">
+                    <p className="text-primary font-medium mb-2 md:mb-3 text-sm md:text-base">
                       {item.company}
                     </p>
-                    <p className="text-gray-200 leading-relaxed mb-3">
+                    <p className="text-gray-200 leading-relaxed text-sm md:text-base">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Timeline Dot */}
-                <div className="relative flex items-center justify-center">
-                  <div className={`w-6 h-6 rounded-full border-4 border-background shadow-lg z-10 hover:scale-125 transition-transform duration-300 ${item.current ? 'bg-primary' : ''}`}>
-                    <div className={`w-full h-full rounded-full animate-pulse ${item.current ? 'bg-gradient-to-br from-primary to-accent' : ''}`}></div>
+                {/* Timeline Dot - Mobile: absolute positioned, Desktop: flex center */}
+                <div className="absolute left-4 transform -translate-x-1/2 md:relative md:left-auto md:transform-none md:flex md:items-center md:justify-center">
+                  <div className={`w-4 h-4 md:w-6 md:h-6 rounded-full border-2 md:border-4 border-white shadow-lg z-10 hover:scale-125 transition-transform duration-300 ${item.current ? 'bg-primary' : 'bg-background'}`}>
+                    <div className={`w-full h-full rounded-full ${item.current ? 'animate-pulse bg-gradient-to-br from-primary to-accent' : ''}`}></div>
                   </div>
                 </div>
 
-                {/* Spacer */}
-                <div className="w-5/12"></div>
+                {/* Spacer - Desktop only */}
+                <div className="hidden md:block md:w-5/12"></div>
               </div>
             ))}
           </div>
