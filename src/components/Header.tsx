@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Menu, X, Lightbulb } from 'lucide-react';
+import { Moon, Sun, Menu, X, Lightbulb, Download } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -28,7 +28,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ['home', 'about', 'skills', 'timeline', 'projects', 'gallery', 'contact'];
+    const sections = ['home', 'about', 'skills', 'experience', 'projects', 'gallery', 'contact'];
     const triggers: ScrollTrigger[] = [];
 
     sections.forEach((sectionId) => {
@@ -52,13 +52,6 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     const hash = window.location.hash.replace('#', '');
     if (hash) {
       setActiveSection(hash);
-      // Smooth scroll to section after a brief delay to ensure DOM is ready
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
     }
   }, []);
 
@@ -113,7 +106,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     { href: '#home', label: 'Home', id: 'home' },
     { href: '#about', label: 'About', id: 'about' },
     { href: '#skills', label: 'Skills', id: 'skills' },
-    { href: '#timeline', label: 'Experience', id: 'timeline' },
+    { href: '#experience', label: 'Experience', id: 'experience' },
     { href: '#projects', label: 'Projects', id: 'projects' },
     { href: '#gallery', label: 'Gallery', id: 'gallery' },
     { href: '#contact', label: 'Contact', id: 'contact' },
@@ -132,6 +125,16 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleResumeDownload = () => {
+    // Create a temporary link element and trigger download
+    const link = document.createElement('a');
+    link.href = '/resume.pdf'; // You'll need to add your resume.pdf to the public folder
+    link.download = 'Akshay_Shinde_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -172,6 +175,15 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
 
           {/* Controls */}
           <div className="flex items-center space-x-4">
+            {/* Resume Download Button */}
+            <Button
+              onClick={handleResumeDownload}
+              className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-full transition-all duration-200 shadow-soft hover:shadow-golden"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Resume
+            </Button>
+            
             {/* Enhanced Lamp Toggle */}
             <div className="relative">
               {/* Lamp Glow Background */}
@@ -247,6 +259,18 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
                   )}
                 </a>
               ))}
+              
+              {/* Mobile Resume Download Button */}
+              <Button
+                onClick={() => {
+                  handleResumeDownload();
+                  setIsMenuOpen(false);
+                }}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-full transition-all duration-200 shadow-soft hover:shadow-golden mt-4"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download Resume
+              </Button>
             </div>
           </div>
         )}

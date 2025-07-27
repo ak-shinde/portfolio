@@ -11,6 +11,7 @@ interface Promotion {
 }
 
 interface TimelineItem {
+  id: number;
   year: string;
   title: string;
   company: string;
@@ -25,6 +26,7 @@ const TimelineSection = () => {
 
   const timelineData: TimelineItem[] = [
     {
+      id: 1,
       year: "2023",
       title: "Software Engineer II",
       company: "Multimedia",
@@ -32,30 +34,35 @@ const TimelineSection = () => {
       current: true
     },
     {
+      id: 2,
       year: "2022",
       title: "Research Student Developer",
       company: "USC Lab of NeuroImaging",
       description: "Re-architected data harmonization platform for the NIH-funded DABI initiative"
     },
     {
+      id: 3,
       year: "2022",
       title: "Software Engineer Intern",
       company: "Twilio",
       description: "Streamlined 25+ Studio console widgets' creation"
     },
     {
+      id: 4,
       year: "2021",
       title: "Master's Degree",
       company: "University of Southern California",
       description: "Computer Science - GPA 3.9"
     },
     {
+      id: 5,
       year: "2018",
       title: "Product Developer",
       company: "BMC Software",
       description: "Worked on TrueSight Network Automation team",
     },
     {
+      id: 6,
       year: "2014",
       title: "Bachelor's Degree",
       company: "Pune Institute of Computer Technology",
@@ -115,7 +122,7 @@ const TimelineSection = () => {
 
   return (
     <section 
-      id="timeline"
+      id="experience"
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent py-20"
     >
@@ -132,7 +139,7 @@ const TimelineSection = () => {
           <div className="space-y-12">
             {timelineData.map((item, index) => (
               <div
-                key={item.year}
+                key={item.id}
                 className={`timeline-item flex items-center ${
                   index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
                 }`}

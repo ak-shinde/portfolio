@@ -66,6 +66,18 @@ const Index = () => {
     // Refresh ScrollTrigger after loading screen completes
     setTimeout(() => {
       ScrollTrigger.refresh();
+      
+      // Handle URL hash navigation after loading completes
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        // Additional delay to ensure ScrollTrigger is ready
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 200);
+      }
     }, 500);
   };
 

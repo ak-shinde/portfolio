@@ -111,7 +111,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
 
     // Timeline section (experience background)
     triggers.push(ScrollTrigger.create({
-      trigger: "#timeline",
+      trigger: "#experience",
       start: "top center", 
       end: "bottom center",
       onEnter: () => transitionToBackground('experience'),

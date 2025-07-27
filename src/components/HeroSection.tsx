@@ -144,15 +144,19 @@ const HeroSection = () => {
         >
           Let's Build Together
         </Button>
+      </div>
 
-        {/* Scroll Indicator - moved below button */}
-        <div 
-          ref={scrollIndicatorRef}
-          className="mt-12 opacity-0"
-        >
-          <div className="flex flex-col items-center">
-            <span className="text-sm text-primary hover:text-white dark:text-muted-foreground dark:hover:text-primary mb-2 transition-colors duration-200">Scroll to explore</span>
-            <ChevronDown className="h-6 w-6 text-primary animate-bounce" />
+      {/* Floating Scroll Indicator */}
+      <div 
+        ref={scrollIndicatorRef}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 z-20"
+      >
+        <div className="flex flex-col items-center cursor-pointer group" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
+          <span className="text-sm text-white/80 group-hover:text-primary mb-2 transition-colors duration-200 drop-shadow-md">
+            Scroll to explore
+          </span>
+          <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 group-hover:bg-primary/20 group-hover:border-primary/30 transition-all duration-300">
+            <ChevronDown className="h-5 w-5 text-white/80 group-hover:text-primary animate-bounce" />
           </div>
         </div>
       </div>
