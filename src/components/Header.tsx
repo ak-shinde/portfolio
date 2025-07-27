@@ -28,7 +28,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ['home', 'about', 'timeline', 'projects', 'gallery', 'contact'];
+    const sections = ['home', 'about', 'skills', 'timeline', 'projects', 'gallery', 'contact'];
     const triggers: ScrollTrigger[] = [];
 
     sections.forEach((sectionId) => {
@@ -112,6 +112,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   const navItems = [
     { href: '#home', label: 'Home', id: 'home' },
     { href: '#about', label: 'About', id: 'about' },
+    { href: '#skills', label: 'Skills', id: 'skills' },
     { href: '#timeline', label: 'Experience', id: 'timeline' },
     { href: '#projects', label: 'Projects', id: 'projects' },
     { href: '#gallery', label: 'Gallery', id: 'gallery' },

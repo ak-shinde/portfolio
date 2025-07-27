@@ -28,6 +28,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
     const backgroundImages = {
       home: '/lovable-uploads/reference.png',
       about: '/lovable-uploads/about.PNG',
+      skills: '/lovable-uploads/experience.PNG', // Use experience background for skills
       experience: '/lovable-uploads/experience.PNG',
       projects: '/lovable-uploads/experience.PNG', // Same as experience for projects
       gallery: '/lovable-uploads/gallery.PNG',
@@ -97,6 +98,15 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
       end: "bottom center",
       onEnter: () => transitionToBackground('about'),
       onEnterBack: () => transitionToBackground('about')
+    }));
+
+    // Skills section
+    triggers.push(ScrollTrigger.create({
+      trigger: "#skills",
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => transitionToBackground('skills'),
+      onEnterBack: () => transitionToBackground('skills')
     }));
 
     // Timeline section (experience background)

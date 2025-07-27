@@ -22,78 +22,78 @@ const GallerySection = () => {
   const photography: GalleryItem[] = [
     { 
       id: 1, 
-      title: "Mountain View", 
+      title: "Bryce canyon", 
       category: "Landscape",
-      image: "/gallery/IMG_1035.PNG"
+      image: "/gallery/bryce.jpeg"
     },
     { 
       id: 2, 
-      title: "Urban Architecture", 
-      category: "Architecture",
-      image: "/gallery/1D5BFA86-57FA-4172-AB16-FB32C35DCA8A.PNG"
+      title: "Mystical Forest", 
+      category: "Nature",
+      image: "/gallery/mysticalforest.jpeg"
     },
     { 
       id: 3, 
-      title: "Nature Study", 
+      title: "Sunset", 
       category: "Nature",
-      image: "/gallery/22B52B07-59A8-46D3-A2EF-DB51EDEB5424.PNG"
+      image: "/gallery/sunset.jpeg"
     },
     { 
       id: 4, 
-      title: "Creative Shot", 
+      title: "Whale watching", 
       category: "Creative",
-      image: "/gallery/3358AD43-F011-496A-A1C8-76BA240829ED.PNG"
+      image: "/gallery/whale.jpeg"
     },
     { 
       id: 5, 
       title: "Portrait Study", 
       category: "Portrait",
-      image: "/gallery/C2338154-1912-44E3-ADE9-DE6CD7593FDD.PNG"
+      image: "/gallery/united.jpeg"
     },
     { 
       id: 6, 
-      title: "Artistic View", 
-      category: "Art",
-      image: "/gallery/1617FA8F-9606-4B7B-A4A3-E6059008AB27.PNG"
+      title: "Antelope Canyon", 
+      category: "Landscape",
+      image: "/gallery/antelope.jpeg"
     },
   ];
 
   const artwork: GalleryItem[] = [
     { 
       id: 1, 
-      title: "Digital Creation", 
-      category: "Digital",
-      image: "/gallery/7B6C42BD-B268-4000-8031-4C8C06B1B6EF.PNG"
+      title: "Tiger", 
+      category: "Animal",
+      image: "/gallery/tiger.jpeg"
     },
     { 
       id: 2, 
-      title: "Concept Art", 
-      category: "Concept",
-      image: "/gallery/343AD404-14E1-4E58-A08F-EF5A6C78B681.PNG"
+      title: "Chicken", 
+      category: "Animal",
+      image: "/gallery/chicken.jpeg"
     },
     { 
       id: 3, 
-      title: "Visual Design", 
-      category: "Design",
-      image: "/gallery/DB2938F4-9CC2-45D5-A9BF-CC2E3A847500.PNG"
+      title: "Sheep", 
+      category: "Animal",
+      image: "/gallery/sheep.jpeg"
     },
     { 
       id: 4, 
-      title: "Creative Piece", 
-      category: "Mixed Media",
-      image: "/gallery/A8CC6485-6D1B-4047-BADA-B0AB75D106A7.PNG"
+      title: "Dog", 
+      category: "Animal",
+      image: "/gallery/dog.jpeg"
     },
     { 
       id: 5, 
-      title: "Artistic Study", 
-      category: "Traditional",
-      image: "/gallery/B3B46A3F-A22A-4F8B-8CBC-B90A38908F9D.PNG"
+      title: "Duck", 
+      category: "Animal",
+      image: "/gallery/duck.jpeg"
     },
     { 
       id: 6, 
-      title: "Digital Art", 
-      category: "Digital",
-      image: "/gallery/77CA4D0C-9C55-434C-8A91-DE7F1FDCE07C.PNG"
+      title: "Mountain Goat", 
+      category: "Animal",
+      image: "/gallery/mountaingoat.jpeg"
     },
   ];
 
