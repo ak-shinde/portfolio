@@ -270,7 +270,7 @@
     box-shadow: 0 0 20px hsl(270 80% 65% / 0.3);
   }
 
-  .text-shadow-strong {
+  /* .text-shadow-strong {
     text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6);
   }
 
@@ -280,7 +280,7 @@
 
   .text-shadow-light {
     text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-  }
+  } */
 }
 
 @keyframes float {

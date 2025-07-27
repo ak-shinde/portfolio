@@ -13,12 +13,18 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
     const tl = gsap.timeline();
 
     // Animate text appearance
-    tl.from(textRef.current, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: "power2.out"
-    });
+    tl.fromTo(textRef.current, 
+      {
+        opacity: 0,
+        y: 30
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out"
+      }
+    );
 
     // Text changes during loading
     const textEl = textRef.current;
@@ -48,7 +54,8 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
   return (
     <div 
       ref={preloaderRef}
-      className="fixed inset-0 z-50 flex items-center justify-center coffee-body"
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{ background: '#ffefdb' }}
     >
       <div className="text-center">
         {/* Exact GitHub Repository Coffee Animation */}
@@ -62,8 +69,11 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
         {/* Loading Text */}
         <p 
           ref={textRef}
-          className="text-xl font-medium opacity-0 mt-8"
-          style={{ color: '#352a22' }}
+          className="text-xl font-medium mt-8"
+          style={{ 
+            color: '#352a22',
+            textShadow: '1px 1px 2px rgba(255,255,255,0.5)' 
+          }}
         >
           Grabbing coffee...
         </p>
