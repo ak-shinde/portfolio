@@ -141,16 +141,22 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     <header 
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-background/0 backdrop-blur-md shadow-soft' 
+          ? 'bg-background/10 backdrop-blur-md shadow-soft border-b border-white/20' 
           : 'bg-transparent'
       }`}
     >
       <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+        <div 
+          className="flex items-center justify-between"
+          onClick={() => isMenuOpen && setIsMenuOpen(false)}
+        >
           {/* Gaming Portfolio Link */}
           <div 
             className="flex items-center gap-2 cursor-pointer group transition-all duration-300 hover:scale-105" 
-            onClick={() => window.open('https://ak-shinde.github.io/Portfolio/game', '_blank')}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open('https://ak-shinde.github.io/Portfolio/game', '_blank');
+            }}
             title="Play the gamified version of my portfolio!"
           >
             <div className="relative">
@@ -171,8 +177,8 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
                 onClick={(e) => handleNavClick(e, item.id)}
                 className={`transition-all duration-200 relative ${
                   activeSection === item.id
-                    ? 'text-white dark:text-primary font-semibold'
-                    : 'text-primary hover:text-white dark:text-foreground dark:hover:text-primary'
+                    ? 'text-primary dark:text-primary font-semibold'
+                    : 'text-white hover:text-primary dark:text-foreground dark:hover:text-primary'
                 }`}
               >
                 {item.label}
@@ -187,7 +193,10 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
           <div className="flex items-center space-x-4">
             {/* Resume Download Button */}
             <Button
-              onClick={handleResumeDownload}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleResumeDownload();
+              }}
               className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-full transition-all duration-200 shadow-soft hover:shadow-golden"
             >
               <Download className="w-4 h-4 mr-2" />
@@ -212,7 +221,10 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
                 ref={lampRef}
                 variant="ghost"
                 size="icon"
-                onClick={handleLampToggle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLampToggle();
+                }}
                 className={`rounded-full relative z-10 transition-all duration-300 ${
                   darkMode 
                     ? 'bg-primary/20 text-primary shadow-lg shadow-primary/25' 
@@ -236,8 +248,11 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden rounded-full"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`md:hidden rounded-full ${darkMode ? 'text-primary' : 'text-primary'}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
             >
               {isMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -248,24 +263,35 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
           </div>
         </div>
 
+        {/* Mobile Menu Backdrop Blur */}
+        {isMenuOpen && (
+          <div 
+            className="md:hidden fixed inset-0 top-20 z-30 bg-black/20 backdrop-blur-sm transition-all duration-300 cursor-pointer" 
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-soft">
-            <div className="px-6 py-4 space-y-4">
+          <div 
+            className="md:hidden absolute top-full left-0 right-0 z-40 bg-background/10 backdrop-blur-md shadow-soft border border-white/20 rounded-b-2xl mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-6 space-y-4">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.id)}
-                  className={`block transition-all duration-200 relative ${
+                  className={`block transition-all duration-200 relative py-2 px-3 rounded-lg hover:bg-background/20 ${
                     activeSection === item.id
-                      ? 'text-white dark:text-primary font-semibold'
+                      ? 'text-white dark:text-primary font-semibold bg-background/20'
                       : 'text-primary hover:text-white dark:text-foreground dark:hover:text-primary'
                   }`}
                 >
                   {item.label}
                   {activeSection === item.id && (
-                    <div className="absolute left-0 top-1/2 w-1 h-4 bg-primary rounded-full -translate-y-1/2"></div>
+                    <div className="absolute left-1 top-1/2 w-1 h-4 bg-primary rounded-full -translate-y-1/2"></div>
                   )}
                 </a>
               ))}
