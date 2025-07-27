@@ -101,7 +101,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="bg-background text-foreground relative">
       {/* Reference Image Background */}
       <div className="relative">
         <ImageBackground darkMode={darkMode} />
@@ -111,21 +111,30 @@ const Index = () => {
         )}
       </div>
       
-      {/* Mobile Menu Clickable Overlay - Full Page Coverage */}
+      {/* Mobile Menu Clickable Overlay - Split Areas */}
       {isMenuOpen && (
-        <div 
-          className="md:hidden fixed inset-0 z-30 cursor-pointer" 
-          onClick={() => setIsMenuOpen(false)}
-          style={{ top: '80px' }}
-        />
+        <>
+          {/* Top overlay - above header */}
+          <div 
+            className="md:hidden fixed inset-x-0 top-0 z-30 cursor-pointer" 
+            onClick={() => setIsMenuOpen(false)}
+            style={{ height: '80px' }}
+          />
+          {/* Bottom overlay - below menu */}
+          <div 
+            className="md:hidden fixed inset-x-0 bottom-0 z-30 cursor-pointer" 
+            onClick={() => setIsMenuOpen(false)}
+            style={{ top: '400px' }}
+          />
+        </>
       )}
       
       {/* Content overlay */}
-      <div className="relative z-10">
+      <div className="relative z-10 min-h-screen flex flex-col">
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         
         <main 
-          className={`transition-all duration-300 ${isMenuOpen ? 'blur-lg' : ''}`}
+          className={`flex-1 transition-all duration-300 ${isMenuOpen ? 'blur-lg' : ''}`}
         >
           <HeroSection />
           <AboutSection />

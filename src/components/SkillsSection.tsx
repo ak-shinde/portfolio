@@ -133,15 +133,15 @@ const SkillsSection = () => {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.8,
+          duration: 0,
           ease: "power2.out",
           scrollTrigger: {
             trigger: card,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: "play none none reverse"
+            toggleActions: "play none none none"
           },
-          delay: index * 0.1
+        //   delay: index * 0.1
         }
       );
     });

@@ -115,8 +115,9 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     setActiveSection(sectionId);
-    setIsMenuOpen(false);
     
     // Update URL hash
     window.history.pushState({}, '', `#${sectionId}`);
@@ -126,6 +127,11 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    
+    // Close menu after scroll starts
+    setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 150);
   };
 
   const handleResumeDownload = () => {
@@ -269,7 +275,7 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div 
-            className="md:hidden absolute top-full left-0 right-0 z-40 bg-background/10 backdrop-blur-md shadow-soft border border-white/20 rounded-b-2xl mx-4"
+            className="md:hidden absolute top-full left-0 right-0 z-50 bg-background/10 backdrop-blur-md shadow-soft border border-white/20 rounded-b-2xl mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="px-6 py-6 space-y-4">
@@ -278,7 +284,7 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.id)}
-                  className={`block transition-all duration-200 relative py-2 px-3 rounded-lg hover:bg-background/20 ${
+                  className={`block transition-all duration-200 relative py-2 px-3 rounded-lg hover:bg-background/20 cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary dark:text-primary font-semibold bg-background/20'
                       : 'text-white hover:text-primary dark:text-foreground dark:hover:text-primary'
