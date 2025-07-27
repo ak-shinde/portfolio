@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Send, Github, Linkedin, Mail, Instagram } from 'lucide-react';
+import { Send, Github, Linkedin, Mail, Instagram, MapPin, Briefcase, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import emailjs from '@emailjs/browser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +21,8 @@ const ContactSection = () => {
     email: '',
     message: ''
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -82,28 +85,77 @@ const ContactSection = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. I'll get back to you soon!",
-    });
-    
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
-    
-    // Add button animation
-    const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
-    if (submitBtn) {
-      gsap.to(submitBtn, {
-        scale: 0.95,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1,
-        ease: "power2.inOut"
+    // Validate form
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast({
+        title: "Please fill in all fields",
+        description: "All fields are required to send your message.",
+        variant: "destructive"
       });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // EmailJS configuration from Vercel environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      
+      // Check if environment variables are configured
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS environment variables not found');
+        throw new Error('Email service not configured');
+      }
+      
+      // Template parameters that match your EmailJS template
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Akshay', // Your name
+        to_email: 'akshay.r.shinde2696@gmail.com' // Your email
+      };
+      
+      // Send email using EmailJS
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      // Success feedback
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      });
+      
+      // Reset form
+      setFormData({ name: '', email: '', message: '' });
+      
+      // Add success animation
+      const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        gsap.to(submitBtn, {
+          scale: 0.95,
+          duration: 0.1,
+          yoyo: true,
+          repeat: 1,
+          ease: "power2.inOut"
+        });
+      }
+      
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      
+      // Error feedback
+      toast({
+        title: "Failed to Send Message",
+        description: "Something went wrong. Please try again or contact me directly at akshay.r.shinde2696@gmail.com",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -188,11 +240,21 @@ const ContactSection = () => {
             
             <Button
               type="submit"
-              className="w-full glow-effect hover:scale-105 transition-all duration-300"
+              disabled={isSubmitting}
+              className="w-full glow-effect hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
               size="lg"
             >
-              <Send className="w-5 h-5 mr-2" />
-              Send Message
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Send Message
+                </>
+              )}
             </Button>
           </form>
 
@@ -206,10 +268,15 @@ const ContactSection = () => {
                   <Mail className="w-6 h-6 text-primary" />
                   <span className="text-foreground">akshay.r.shinde2696@gmail.com</span>
                 </div>
+
+                <div className="flex items-center space-x-4">
+                  <MapPin className="w-6 h-6 text-primary" />
+                  <span className="text-foreground">Milpitas, California</span>
+                </div>
                 
                 <div className="flex items-center space-x-4">
-                  <span className="text-muted-foreground">📍</span>
-                  <span className="text-foreground">Available for remote work</span>
+                  <Briefcase className="w-6 h-6 text-primary" />
+                  <span className="text-foreground">Available for working in SF Bay Area / Remotely</span>
                 </div>
               </div>
             </div>

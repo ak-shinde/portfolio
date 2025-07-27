@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Menu, X, Lightbulb, Download } from 'lucide-react';
+import { Moon, Sun, Menu, X, Lightbulb, Download, Gamepad2, Play } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -147,9 +147,19 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
     >
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="text-2xl font-bold text-golden cursor-pointer" onClick={() => window.open('https://ak-shinde.github.io/Portfolio/game', '_blank')}>
-            AS
+          {/* Gaming Portfolio Link */}
+          <div 
+            className="flex items-center gap-2 cursor-pointer group transition-all duration-300 hover:scale-105" 
+            onClick={() => window.open('https://ak-shinde.github.io/Portfolio/game', '_blank')}
+            title="Play the gamified version of my portfolio!"
+          >
+            <div className="relative">
+              <Gamepad2 className="w-6 h-6 text-primary group-hover:text-golden transition-colors duration-300" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse group-hover:bg-golden"></div>
+            </div>
+            <span className="text-sm font-bold text-primary group-hover:text-golden transition-colors duration-300 hidden sm:block">
+              Play Portfolio
+            </span>
           </div>
 
           {/* Desktop Navigation */}
