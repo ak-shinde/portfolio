@@ -30,7 +30,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
       experience: '/lovable-uploads/experience.PNG',
       projects: '/lovable-uploads/projects.PNG',
       gallery: '/lovable-uploads/gallery.PNG',
-      contact: '/lovable-uploads/reference.png'
+      contact: '/lovable-uploads/reference.PNG'
     };
   }
 
