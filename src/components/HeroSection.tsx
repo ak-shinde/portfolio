@@ -116,7 +116,10 @@ const HeroSection = () => {
       <div className="relative z-10 text-center px-6 max-w-4xl">
         <h1 
           ref={headlineRef}
-          className="text-5xl md:text-7xl font-bold mb-6 opacity-0 text-white drop-shadow-lg"
+          className="text-5xl md:text-7xl font-bold mb-6 opacity-0 text-white"
+          style={{ 
+            textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
+          }}
         >
           Hi, I'm{' '}
           <span className="text-golden bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-sm">
@@ -130,7 +133,10 @@ const HeroSection = () => {
 
         <p 
           ref={subtitleRef}
-          className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto opacity-0 drop-shadow-md"
+          className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto opacity-0"
+          style={{ 
+            textShadow: '1px 1px 6px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.5)' 
+          }}
         >
           Crafting digital experiences with 5+ years of passion.<br />
           From code to art, I bring ideas to life.
@@ -152,10 +158,15 @@ const HeroSection = () => {
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 z-20"
       >
         <div className="flex flex-col items-center cursor-pointer group" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
-          <span className="text-sm text-white/80 group-hover:text-primary mb-2 transition-colors duration-200 drop-shadow-md">
+          <span 
+            className="text-sm text-white/90 group-hover:text-primary mb-2 transition-colors duration-200"
+            style={{ 
+              textShadow: '1px 1px 4px rgba(0,0,0,0.8)' 
+            }}
+          >
             Scroll to explore
           </span>
-          <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 group-hover:bg-primary/20 group-hover:border-primary/30 transition-all duration-300">
+          <div className="p-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/30 group-hover:bg-primary/40 group-hover:border-primary/50 transition-all duration-300">
             <ChevronDown className="h-5 w-5 text-white/80 group-hover:text-primary animate-bounce" />
           </div>
         </div>

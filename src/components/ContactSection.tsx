@@ -177,11 +177,11 @@ const ContactSection = () => {
         ref={stickyNoteRef}
         className="absolute inset-0 flex items-center justify-center"
       >
-        <div className="w-80 h-80 bg-gradient-to-br from-yellow-200 to-yellow-300 shadow-soft transform rotate-12 opacity-50">
+        <div className="w-80 h-80 bg-gradient-to-br from-yellow-200 to-yellow-300 dark:from-purple-900/80 dark:to-indigo-800/80 shadow-soft transform rotate-12 opacity-50">
           <div className="p-6 h-full">
             <div className="space-y-4">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="w-full h-3 bg-yellow-400/50 rounded"></div>
+                <div key={i} className="w-full h-3 bg-yellow-400/50 dark:bg-purple-600/50 rounded"></div>
               ))}
             </div>
           </div>
@@ -191,7 +191,12 @@ const ContactSection = () => {
       {/* Content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-golden">
+          <h2 
+            className="text-4xl md:text-6xl font-bold mb-6 text-golden"
+            style={{ 
+              textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
+            }}
+          >
             Let's Connect
           </h2>
         </div>

@@ -231,7 +231,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
         }}
       >
         {/* Dark overlay for better text readability */}
-        <div className={`bg-overlay absolute inset-0 transition-all duration-500 ${darkMode ? 'bg-black/60' : 'bg-black/40'}`}></div>
+        <div className={`bg-overlay absolute inset-0 transition-all duration-500 bg-black/30`}></div>
       </div>
 
       {/* Next background image for smooth transitions */}
@@ -245,7 +245,7 @@ const ImageBackground = ({ darkMode }: ImageBackgroundProps) => {
         }}
       >
         {/* Dark overlay for better text readability */}
-        <div className={`bg-overlay absolute inset-0 transition-all duration-500 ${darkMode ? 'bg-black/60' : 'bg-black/40'}`}></div>
+        <div className={`bg-overlay absolute inset-0 transition-all duration-500 bg-black/30`}></div>
       </div>
     </div>
   );

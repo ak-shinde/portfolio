@@ -192,7 +192,12 @@ const SkillsSection = () => {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-golden drop-shadow-lg">
+          <h2 
+            className="text-4xl md:text-6xl font-bold mb-6 text-golden"
+            style={{ 
+              textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
+            }}
+          >
             Technical Skills
           </h2>
         </div>

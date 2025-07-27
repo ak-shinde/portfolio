@@ -92,7 +92,12 @@ const ProjectsSection = () => {
         ref={splineRef}
         className="relative z-10 w-full max-w-6xl mx-auto px-6"
       >
-        <h2 className="text-4xl md:text-6xl font-bold mb-12 text-center text-golden">
+        <h2 
+          className="text-4xl md:text-6xl font-bold mb-12 text-center text-golden"
+          style={{ 
+            textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
+          }}
+        >
           My Projects
         </h2>
 

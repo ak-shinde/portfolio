@@ -78,7 +78,7 @@ const AboutSection = () => {
         ref={sketchbookRef}
         className="absolute inset-0 flex items-center justify-center"
       >
-        <div className="w-96 h-96 bg-gradient-to-br from-card to-muted rounded-lg shadow-soft transform rotate-12 from-yellow-200 to-yellow-300 opacity-50">
+        <div className="w-96 h-96 bg-gradient-to-br from-yellow-200 to-yellow-300 dark:from-purple-900/80 dark:to-indigo-800/80 rounded-lg shadow-soft transform rotate-12 opacity-50">
           <div className="p-8 h-full flex flex-col">
             <div className="border-b border-border mb-4 pb-2">
               <div className="w-full h-2 bg-muted rounded"></div>
@@ -100,7 +100,12 @@ const AboutSection = () => {
         ref={contentRef}
         className="relative z-10 max-w-4xl mx-auto px-6 text-center"
       >
-        <h2 className="text-4xl md:text-6xl font-bold mb-8 text-golden drop-shadow-lg">
+        <h2 
+          className="text-4xl md:text-6xl font-bold mb-8 text-golden"
+          style={{ 
+            textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)' 
+          }}
+        >
           About Me
         </h2>
         
