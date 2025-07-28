@@ -134,7 +134,7 @@ const Index = () => {
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         
         <main 
-          className={`flex-1 transition-all duration-300 ${isMenuOpen ? 'blur-lg' : ''}`}
+          className={`flex-1 transition-all duration-300 ${isMenuOpen ? 'blur-md bg-black/80' : ''}`}
         >
           <HeroSection />
           <AboutSection />

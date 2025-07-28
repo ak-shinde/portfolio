@@ -147,9 +147,9 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/10 backdrop-blur-md shadow-soft border-b border-white/20' 
-          : 'bg-transparent'
+        isScrolled || isMenuOpen
+          ? `${isMenuOpen ? 'bg-black/40' : 'bg-background/20'} backdrop-blur-md shadow-soft border-b border-white/20` 
+          : 'bg-transparent border-none'
       }`}
     >
       <nav className="container mx-auto px-6 py-4">
@@ -246,7 +246,7 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
                     darkMode ? 'text-amber-400 drop-shadow-sm' : ''
                   }`} />
                 ) : (
-                  <Lightbulb className="h-5 w-5 text-muted-foreground" />
+                  <Lightbulb className="h-5 w-5 text-primary" />
                 )}
               </Button>
             </div>
@@ -275,7 +275,7 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div 
-            className="md:hidden absolute top-full left-0 right-0 z-50 bg-background/10 backdrop-blur-md shadow-soft border border-white/20 rounded-b-2xl mx-4"
+            className="absolute top-full left-0 right-0 z-40 bg-black/40 backdrop-blur-md shadow-soft border-b border-white/20 rounded-b-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="px-6 py-6 space-y-4">
