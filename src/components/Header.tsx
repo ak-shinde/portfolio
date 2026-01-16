@@ -137,7 +137,7 @@ const Header = ({ darkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }: HeaderP
   const handleResumeDownload = () => {
     // Create a temporary link element and trigger download
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // You'll need to add your resume.pdf to the public folder
+    link.href = '/Resume-AkshayShinde.pdf'; // You'll need to add your resume.pdf to the public folder
     link.download = 'Akshay_Shinde_Resume.pdf';
     document.body.appendChild(link);
     link.click();
